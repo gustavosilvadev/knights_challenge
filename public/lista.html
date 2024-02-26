@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <head>
+    <!-- Outras tags head... -->
+    <!-- Adicione essas linhas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+  
+  <title>Cadastro Knight</title>
+</head>
+<!-- 
+<body>
+  <div id="app">
+    <h1>{{ message }}</h1>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue!'
+      }
+    });
+  </script>
+</body>
+ -->
+
+ <body>
+  <div class="container">
+    <h1>Lista de Knights</h1>
+    <form action="/cadastro" method="POST" class="col s12">
+      <div class="input-field col s12">
+        <input id="name" type="text" class="validate" name="name">
+        <label for="name">Nome</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="age" type="text" class="validate" name="age">
+        <label for="age">Idade</label>
+      </div>
+      <!-- Adicione os demais campos do formulário conforme necessário -->
+      <button class="btn waves-effect waves-light" type="submit">Cadastrar</button>
+    </form>
+  </div>
+</body>
+
+ </html>

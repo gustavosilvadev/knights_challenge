@@ -1,0 +1,108 @@
+<%- include('partials/header'); %>
+
+
+  <h1>Listagem de Knights</h1>
+  <a href="cadastro" class="waves-effect pink darken-4 btn-large">Novo Knight</a>
+  <ul class="collapsible">
+    <li v-for="(knight, index) in knights" :key="index">
+      <div class="collapsible-header">
+        <h4>{{ knight.name }} - </h4>
+        <h4> <b style="margin-left: 5px !important;">Idade:</b> {{ calcAge(knight.birthday) }},</h4>
+        <h4> <b style="margin-left: 5px !important;">Armas:</b> {{ calcAge(knight.birthday) }},</h4>
+        <h4> <b style="margin-left: 5px !important;">Atributos:</b> {{ calcAge(knight.birthday) }},</h4>
+        <h4> <b style="margin-left: 5px !important;">Ataques:</b> {{ calcAge(knight.birthday) }},</h4>
+        <h4> <b style="margin-left: 5px !important;">Exp:</b> {{ calcAge(knight.birthday) }},</h4>
+      </div>
+      <div class="collapsible-body">
+        <table class="striped">
+          <thead>
+            <tr>
+              <th>Armamentos</th>
+              <th>Atributos</th>
+              <th>Ataque</th>
+              <th>Experiência</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <!-- <td>{{ knight.weapons }}</td> -->
+              <td>
+                <ul v-for="(weapon, index) in knight.weapons" :key="index">
+                  <li>Nome: {{ weapon.name }}</li>
+                  <li>Mod: {{ weapon.mod }}</li>
+                  <li>Attr: {{ weapon.attr }}</li>
+                  <li>Equipado: {{ (weapon.equipped == true ? "Sim" : "Não") }}</li>
+                </ul>
+              </td>
+
+              <td>
+
+
+                <ul>
+                  <li>Strength: {{knight.attributes.strength}}</li>
+                  <li>Dexterity: {{knight.attributes.dexterity}}</li>
+                  <li>Constitution: {{knight.attributes.constitution}}</li>
+                  <li>Intelligence: {{knight.attributes.intelligence}}</li>
+                  <li>Wisdom: {{knight.attributes.wisdom}}</li>
+                  <li>Charisma: {{knight.attributes.charisma}}</li>
+
+                </ul>
+
+              </td>
+              <td>{{ (knight.attack != undefined || knight.attack > 0) ? knight.attack : 0}}</td>
+              <td>{{ (knight.exp != undefined || knight.exp > 0) ? knight.exp : 0}}</td>
+
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </li>
+  </ul>
+
+  <%- include('partials/footer'); %>
+
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          knights: []
+        },
+
+        mounted() {
+
+          // Knights List
+          fetch('/knights')
+            .then(response => response.json())
+            .then(data => {
+
+              this.knights = data
+
+            })
+            .catch(error => console.error('Erro ao buscar knights:', error));
+
+          // Component Collapsible - Materialize CSS
+          var elems = document.querySelectorAll('.collapsible');
+          var instances = M.Collapsible.init(elems, {});
+
+        },
+        methods: {
+          calcAge: function (value) {
+            const today = new Date();
+            const birthDate = new Date(value);
+
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const currentMonth = today.getMonth();
+            const birthMonth = birthDate.getMonth();
+
+            if (currentMonth < birthMonth || (currentMonth === birthMonth && today.getDate() < birthDate.getDate())) {
+              age--;
+            }
+
+            return age;
+
+          }
+        }
+      });
+    </script>

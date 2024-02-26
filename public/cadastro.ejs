@@ -1,0 +1,114 @@
+<%- include('partials/header'); %>
+    <h1>Cadastro de Knights</h1>
+
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="name" type="text" v-model="knight.name">
+            <label for="name">Nome do Knight</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="birthday" type="text" class="datepicker" v-model="knight.birthday">
+            <label for="birthday">Data de Nascimento</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="weapons" type="text" v-model="knight.weapons">
+            <label for="weapons">Armas</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="strength" type="number" v-model="knight.strength">
+            <label for="strength">Força</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="dexterity" type="number" v-model="knight.dexterity">
+            <label for="dexterity">Destreza</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="constitution" type="number" v-model="knight.constitution">
+            <label for="constitution">Constituição</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="intelligence" type="number" v-model="knight.intelligence">
+            <label for="intelligence">Inteligência</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="wisdom" type="number" v-model="knight.wisdom">
+            <label for="wisdom">Sabedoria</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="charisma" type="number" v-model="knight.charisma">
+            <label for="charisma">Carisma</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="attack" type="number" v-model="knight.attack">
+            <label for="attack">Ataque</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="exp" type="number" v-model="knight.exp">
+            <label for="exp">Experiência</label>
+          </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action" @click.prevent="submitForm">Cadastrar
+        </button>
+      </form>
+    </div>
+
+    <%- include('partials/footer'); %>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        knight: {
+          name: '',
+          // nickname: '',
+          birthday: '',
+          weapons: '',
+          strength: 0,
+          dexterity: 0,
+          constitution: 0,
+          intelligence: 0,
+          wisdom: 0,
+          charisma: 0,
+          attack: 0,
+          exp: 0
+        }
+      },
+      mounted() {
+        const elems = document.querySelectorAll('.datepicker');
+        const options = {
+          maxDate: new Date(2024, 11, 31), // Define a data máxima como 31/12/2024
+          yearRange: [1900, 2024]
+          
+        };
+        const instances = M.Datepicker.init(elems, options);
+      },
+      methods: {
+        submitForm() {
+          // console.log('Knight cadastrado:', this.knight);
+
+          axios.post('/knights', this.knight)
+          .then(response => {
+            console.log('Knight cadastrado:', response.data);
+          })
+          .catch(error => {
+            console.error('Erro ao cadastrar Knight:', error);
+          });
+
+
+        }
+      }
+    });
+  </script>
+</body>
+</html>
